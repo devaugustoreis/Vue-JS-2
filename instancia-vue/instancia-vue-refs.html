@@ -1,0 +1,36 @@
+<meta charset="UTF-8">
+<script src="https://unpkg.com/vue@2"></script>
+
+<div id="app">
+    <!-- Utilizamos o ref para referenciar / acessar o elemento HTML no Vue. -->
+    <!-- Apesar da ausência do ":" ref é uma propriedade do Vue, e não do HTML em si. -->
+    <h1 ref="aulaRef">{{ aula }}</h1>
+    <h2>{{ modulo }}</h2>
+    <button @click="alterarAula">Alterar Aula</button>
+    <button @click="alterarModulo">Alterar Módulo</button>
+</div>
+
+<script>
+    const vm = new Vue({
+        el: "#app",
+        data: {
+            aula: "Aulas: Usando Refs",
+            modulo: "Módulo: Instância Vue"
+        },
+        methods: {
+            alterarAula() {
+                this.aula += "#"
+            },
+            alterarModulo() {
+                this.modulo += "#"
+                console.log(this.aula)
+                console.log(this.$refs.aulaRef.innerText)
+            }
+        }
+    })
+
+    // Manipulações diretas da DOM.
+    vm.$refs.aulaRef.innerText = "Alterado diretamente! :("
+    document.querySelector("h1").innerText = "Novamente alterado diretamente! :("
+    // Não é interessante realizar os exemplos acima, pois o estado interno da instância do Vue manterá o valor original. Isto poderá ocasionar comportamentos inesperados, por exemplo, revertendo a mudança realizada ao valor original do atributo contido na instância do Vue assim que alguma interação for realizada (através do Vue) com o elemento.
+</script>
