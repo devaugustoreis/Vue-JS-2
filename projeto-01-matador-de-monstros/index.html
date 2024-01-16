@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+    <title>Projeto 01 - O Matador de Monstros</title>
+    <script src="https://unpkg.com/vue@2"></script>
+</head>
+<body>
+    <div id="monster-killer-game">
+
+        <div class="interface-box">
+            <div class="agent-data">
+                <h1>Jogador</h1>
+                <div class="health-bar">
+                    <div class="current-health" :style="healthBarFill(playerHealth)"></div>
+                </div>
+                <p>{{ playerHealth }}%</p>
+            </div>
+            <div class="agent-data">
+                <h1>Monstro</h1>
+                <div class="health-bar">
+                    <div class="current-health" :style="healthBarFill(monsterHealth)"></div>
+                </div>
+                <p>{{ monsterHealth }}%</p>
+            </div>
+        </div>
+        
+        <div v-if="result != ''" class="result-box" :style="resultStyle">{{ result }}</div>
+
+        <div class="commands-box">
+            <button class="command cmd-start" v-if="!gameStarted" @click="resetGame(true)">Iniciar Novo Jogo</button>
+            <template v-else>
+                <button class="command cmd-attack" @click="attack(false)">Ataque</button>
+                <button class="command cmd-special-attack" @click="attack(true)">Ataque Especial</button>
+                <button class="command cmd-heal" @click="heal">Curar</button>
+                <button class="command cmd-surrender" @click="resetGame(false)">Desistir</button>
+            </template>
+        </div>
+
+        <div class="log-box" v-if="turnNumber >= 2">
+            <template v-for="turn of combatLog">
+                TURNO {{ turn.number }}
+                <div v-if="turn.command == 'attack'" class="log attack-log">Jogador atacou causando {{ turn.playerRoll }}% de dano ao monstro.</div>
+                <div v-if="turn.command == 'special attack'" class="log special-attack-log">Jogador utilizou um ataque especial e causou {{ turn.playerRoll }}% de dano ao Monstro!</div>
+                <div v-if="turn.command == 'heal'" class="log heal-log">Jogador se curou em {{ turn.playerRoll }}% de vida.</div>
+                <div class="log">Monstro causou {{ turn.monsterRoll }}% de dano ao Jogador.</div>
+            </template>
+        </div>
+
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>
