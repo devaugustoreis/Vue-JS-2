@@ -1,0 +1,120 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+
+* {
+    margin: 0;
+    padding: 0;
+    border: 0;
+    box-sizing: border-box;
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 300;
+}
+
+html, body {
+    height: 100%;
+}
+
+body {
+    padding: 3vh;
+}
+
+.interface-box, .result-box, .commands-box, .log-box {
+    width: 100%;
+    background-color: white;
+    box-shadow: 0px 2px 6px 3px rgb(165 165 165 / 40%);
+    margin-bottom: 3vh;
+}
+
+.interface-box {
+    height: 200px;
+    padding: 0 3vh;
+    display: flex;
+    justify-content: space-around;
+    
+    .agent-data {
+        height: 100%;
+        width: 40%;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+
+        .health-bar {
+            height: 30px;
+            width: 100%;
+            border: 2px solid gray;
+            margin-top: 20px;
+            
+            .current-health {
+                height: 100%;
+                width: 100%;
+                background-color: green;
+            }
+        }
+    }
+}
+
+.result-box {
+    padding: 3vh;
+    text-align: center;
+    font-size: 1.6rem;
+    font-weight: 600;
+}
+
+.commands-box {
+    height: 100px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    column-gap: 25px;
+
+    .command {
+        font-size: 2rem;
+        padding: 5px 14px;
+        border-radius: 6px;
+        color: white;
+        transition: 0.2s box-shadow;
+        cursor: pointer;
+
+        &:hover {
+            box-shadow: 0px 0px 1px 4px rgba(37, 103, 202, 0.75);
+        }
+    }
+
+    .cmd-start { background-color: #4655a9; }
+    .cmd-attack { background-color: #d43733; }
+    .cmd-special-attack { background-color: #f19c39;}
+    .cmd-heal { background-color: #6db986; }
+    .cmd-surrender { background-color: #babbba; }
+
+    .cmd-special-attack, .cmd-surrender { color: rgb(17, 17, 17); }
+}   
+
+.log-box {
+    padding: 3vh;
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+    row-gap: 10px;
+    max-height: 500px;
+    overflow-y: auto;
+    font-weight: 500;
+    font-size: 1.3rem;
+
+    .log {
+        width: 100%;
+        background-color: #e37677;
+        color: white;
+        border-radius: 6px;
+        padding: 8px;
+        text-align: center;
+        font-weight: 500;
+        font-size: 1.3rem;
+    }
+
+    .attack-log { background-color: #838dc6; }
+    .special-attack-log { 
+        background-color: #7724e9;
+        box-shadow: 0px 0px 5px 3px rgb(177, 36, 233, 0.7); 
+    }
+    .heal-log { background-color: #6db986; }
+}
