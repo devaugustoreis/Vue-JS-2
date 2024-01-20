@@ -1,0 +1,38 @@
+<meta charset="UTF-8">
+<script src="https://unpkg.com/vue@2"></script>
+
+<div id="app">
+</div>
+
+<script>
+    const vm = new Vue({
+        // Obrigatoriamente o template precisa estar encapsulado em um único elemento HTML.
+        template: `
+            <div>
+                <h1>{{ aula }}</h1>
+                <h2>{{ modulo }}</h2>
+                <button @click="alterarAula">Alterar Aula</button>
+                <button @click="alterarModulo">Alterar Módulo</button>
+            </div>
+        `,
+        data: {
+            aula: "Aulas: Montando Instância Vue",
+            modulo: "Módulo: Instância Vue"
+        },
+        methods: {
+            alterarAula() {
+                this.aula += "#"
+            },
+            alterarModulo() {
+                this.modulo += "#"
+            }
+        }
+    })
+
+    // É possível utilizar um template e montar uma instância assim.
+    // vm.$mount("#app")
+
+    // Também seria possível monstar a instância do modo abaixo.
+    vm.$mount() // Instância foi montada, mas precisa ser renderizada na página.
+    document.querySelector("#app").appendChild(vm.$el)
+</script>
