@@ -1,0 +1,41 @@
+<script src="https://unpkg.com/vue@2"></script>
+
+<div id="app">
+    <button v-on:click="aumentar">Aumentar</button>
+    <button v-on:click="contadorB++">Aumentar B</button>
+    <button v-on:click="diminuir">Diminuir</button>
+    <p>Contador A: {{ contador }}</p>
+    <p>Contador B: {{ contadorB }}</p>
+    <!-- <p>Resultado: {{ resultado() }}</p> -->
+    <p>Resultado: {{ resultado }}</p>
+</div>
+
+<script>
+    new Vue({
+        el: '#app',
+        data: {
+            contador: 0,
+            contadorB: 0
+        },
+        // Porpriedades computadas são importantes em termos de desempenho.
+        // A função resultado() em métodos seria desnecessariamente chamada pelo botão Aumentar B
+        computed: {
+            resultado() {
+                console.log("Função computada chamada")
+                return this.contador >= 5 ? 'Maior ou igual a 5' : 'Menor que 5'
+            }
+        },
+        methods: {
+            aumentar() {
+                this.contador++
+            },
+            diminuir() {
+                this.contador--
+            },
+            // resultado() {
+            //     console.log("Função methods chamada")
+            //     return this.contador >= 5 ? 'Maior ou igual a 5' : 'Menor que 5'
+            // }
+        }
+    })
+</script>
