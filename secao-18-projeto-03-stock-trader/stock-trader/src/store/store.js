@@ -24,19 +24,26 @@ export default new Vuex.Store({
     },
 
     mutations: {
-        updateFunds(state, payload) {
+        setFunds(state, payload) {
             state.totalFunds = payload
         },
 
-        updateAllStocks(state, payload) {
+        setAllStocks(state, payload) {
             state.allStocks = payload
         },
 
         updateStockQuantity(state, payload) {
             const stock = state.allStocks.find(stock => stock.id == payload.id)
 
-            if (payload.type == "buy") stock.quantity += payload.quantity
-            else stock.quantity -= payload.quantity
+            if (stock) {
+                if (payload.type == "buy" && payload.value <= state.totalFunds) {
+                    stock.quantity += payload.quantity
+                    state.totalFunds -= payload.value
+                } else if (payload.type == "sell" && payload.quantity <= stock.quantity) {
+                    stock.quantity -= payload.quantity
+                    state.totalFunds += payload.value
+                }
+            }
         },
         
         randomizeStocksPrice(state) {
@@ -53,22 +60,13 @@ export default new Vuex.Store({
     },
 
     actions: {
-        loadFunds(context, payload) {
-            context.commit("updateFunds", payload)
-        },
-
-        loadStocks(context, payload) {
-            context.commit("updateAllStocks", payload)
+        loadData(context, payload) {
+            context.commit("setFunds", payload.funds)
+            context.commit("setAllStocks", payload.allStocks)
         },
 
         operateStock(context, payload) {
             context.commit("updateStockQuantity", payload)
-
-            let newFunds = context.getters.funds
-
-            if (payload.type == "buy") newFunds -= payload.value
-            else newFunds += payload.value
-            context.commit("updateFunds", newFunds)
         },
 
         randomizeStocksPrice(context) {

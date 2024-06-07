@@ -3,8 +3,7 @@
 
         <div class="stock-title" :class="color">
             {{ stockData.name }} 
-            (Preço: {{ stockData.price | R$ }}
-            <span v-if="!isBuying"> | Qtde: {{ stockData.quantity }}</span>)
+            (Preço: {{ stockData.price | R$ }}<span v-if="!isBuying">&nbsp;| Qtde: {{ stockData.quantity }}</span>)
         </div>
 
         <div class="stock-operation">
@@ -54,7 +53,7 @@ export default {
         },
 
         invalidOperation() {
-            if (this.operationQty <= 0) return true
+            if (this.operationQty <= 0 || !Number.isInteger(this.operationQty)) return true
             else if (this.isBuying) return this.operationValue > this.funds
             else return this.operationQty > this.stockData.quantity
         },
@@ -68,13 +67,12 @@ export default {
         },
         
         operationData() {
-            let data = {
+            return {
                 id: this.stockData.id,
                 type: this.isBuying ? "buy" : "sell",
                 quantity: this.operationQty,
                 value: this.operationValue
             }
-            return data
         }
     },
 
@@ -97,6 +95,9 @@ export default {
 
 
 <style scoped lang="scss">
+$blue: rgb(43, 112, 216);
+$red: rgb(216, 43, 43);
+
 .stock {
     height: 150px;
     width: 25vw;
@@ -136,11 +137,11 @@ export default {
 }
 
 .blue-border {
-    border-bottom: 1px solid rgb(43, 112, 216);
+    border-bottom: 1px solid $blue;
 }
 
 .red-border {
-    border-bottom: 1px solid rgb(216, 43, 43);
+    border-bottom: 1px solid $red;
 }
 
 .amount-label {
@@ -148,11 +149,11 @@ export default {
 }
 
 .blue-label {
-    color:rgb(43, 112, 216);
+    color:$blue;
 }
 
 .red-label {
-    color:rgb(216, 43, 43);
+    color:$red;
 }
 
 .btn {

@@ -8,11 +8,13 @@
         </div>
         <div class="menu-actions">
             <a class="menu-item" @click="endDay()">FINALIZAR DIA</a>
-            <a class="menu-item save-load-item" @click="showSaveLoad = true">SALVAR & CARREGAR</a>
-            <div class="save-load-submenu" :class="{'show': showSaveLoad}">
-                <p class="sub-menu-item" @click="saveData()">Salvar Dados</p>
-                <p class="sub-menu-item" @click="loadData()">Carregar Dados</p>
-            </div>
+            <a class="menu-item save-load-item" @click="showSaveLoad = true" >
+                SALVAR & CARREGAR
+                <div class="save-load-submenu" :class="{'show': showSaveLoad}">
+                    <p class="sub-menu-item" @click.stop="saveData()">Salvar Dados</p>
+                    <p class="sub-menu-item" @click.stop="loadData()">Carregar Dados</p>
+                </div>
+            </a>
             <a class="menu-item">SALDO: {{ funds | R$ }}</a>
         </div>
     </div>
@@ -37,13 +39,11 @@ export default {
     },
 
     mounted() {
-        document.addEventListener("mouseup", event => {
-            if (!event.target.classList.contains("save-load-item") &&
-                !event.target.classList.contains("save-load-submenu") &&
-                !event.target.classList.contains("sub-menu-item")
-            )
-                this.showSaveLoad = false 
-        })
+        document.addEventListener("mouseup", this.closeSaveLoadMenu)
+    },
+
+    beforeDestroy() {
+        document.removeEventListener("mouseup", this.closeSaveLoadMenu)
     },
 
     methods: {
@@ -52,15 +52,29 @@ export default {
         },
 
         saveData() {
-            this.$http.put("funds.json", this.funds)
-            this.$http.put("stocks.json", this.allStocks)
+            const data = {
+                funds: this.funds,
+                allStocks: this.allStocks
+            }
+
+            this.$http.put("data.json", data)
+                .catch(() => alert("Erro ao salvar os dados"))
+
             this.showSaveLoad = false
         },
 
         loadData() {
-            this.$http.get("funds.json").then(res => this.$store.dispatch("loadFunds", res.data))
-            this.$http.get("stocks.json").then(res => this.$store.dispatch("loadStocks", res.data))
+            this.$http.get("data.json")
+                .then(res => this.$store.dispatch("loadData", res.data))
+                .catch(() => alert("Erro ao carregar os dados"))
+
             this.showSaveLoad = false
+        },
+
+        closeSaveLoadMenu(event) {
+            if (!event.target.closest('.save-load-item, .save-load-submenu')) {
+                this.showSaveLoad = false
+            }
         }
     }
 }
@@ -97,6 +111,10 @@ export default {
     transition: 0.3s;
 }
 
+.save-load-item {
+    position: relative
+}
+
 .active, .menu-item:hover, .sub-menu-item:hover {
     background-color: rgb(216, 216, 216);
 }
@@ -109,9 +127,9 @@ export default {
     font-size: 0.9rem;
     font-weight: 600;
     position: absolute;
-    right: 190px;
     display: none;
     text-align: center;
+    left: 0px;
     width: 201px;
     height: 100px;
 }
