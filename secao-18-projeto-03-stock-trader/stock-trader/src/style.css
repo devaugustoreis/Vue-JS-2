@@ -1,0 +1,22 @@
+* {
+    padding: 0;
+    margin: 0;
+    border: 0;
+    box-sizing: border-box;
+}
+
+html, body {
+    height: 100%;
+}
+
+body {
+	font-family: 'Montserrat', sans-serif;
+}
+
+.blue {
+    background-color: rgb(43, 112, 216);
+}
+
+.green {
+    background-color: rgb(4, 117, 22);
+}
