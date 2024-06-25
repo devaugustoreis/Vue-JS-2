@@ -10,51 +10,51 @@
 			OBS: DESCOMENTAR A ANIMACAO / TRANSICAO QUE QUISER VERIFICAR O COMPORTAMENTO. 
 		-->
 
-		<!-- <transition name="fade">
+		<transition name="fade">
 			<b-alert variant="info" show v-if="exibir">{{ msg }}</b-alert>
-		</transition> -->
+		</transition>
 
-		<!-- <transition name="slide-outsync">
+		<transition name="slide-outsync">
 			<b-alert variant="info" show v-if="exibir">
 				Type = transition (o mais demorado, por padrão) <br>
 				Fico na tela até a transition terminar (volto para a posição original)
 			</b-alert>
-		</transition> -->
+		</transition>
 
 		<!-- COMENTARIO
 			Com o atributo "appear", ele fará a transição/animação no momento que a aplicação for carregada (por exemplo, caso o elemento já comece em tela) 
 		-->
-		<!-- <transition name="slide-outsync" type="animation" appear>
+		<transition name="slide-outsync" type="animation" appear>
 			<b-alert variant="info" show v-show="exibir2">
 				Type = animation (setado via atributo) <br>
 				Fico na tela até a animação terminar, ou seja, não chego a desaparecer por completo (opacity 0)
 			</b-alert>
-		</transition> -->
+		</transition>
 
 		<!-- COMENTARIO
 			Integrando outro padrão de biblioteca com vue 
 		-->
-		<!-- <transition
+		<transition
 			enter-active-class="animated bounce"
 			leave-active-class="animated shake">
 				<b-alert variant="info" show v-show="exibir">{{ msg }}</b-alert>
-		</transition> -->
+		</transition>
 
-		<!-- <hr>
+		<hr>
 		<b-select v-model="tipoAnimacao" class="mb-4">
 			<option value="fade">Fade</option>
 			<option value="slide">Slide</option>
-		</b-select> -->
+		</b-select>
 
 		<!-- COMENTARIO
 			Precisamos usar v-if abaixo, pois dentro de transition só pode ter um único elemento (não funciona com v-show). 
 			MODES:
 			out-in => Primeiro quem está saindo, sai. Depois quem está entrando, entra.
 		-->
-		<!-- <transition :name="tipoAnimacao" mode="out-in">
+		<transition :name="tipoAnimacao" mode="out-in">
 			<b-alert variant="info" show v-if="exibir" key="info">{{ msg }}</b-alert>
 			<b-alert variant="warning" show v-else key="warn">{{ msg }}</b-alert>
-		</transition> -->
+		</transition>
 
 		<!-- 
 			CICLO DE VIDA DE UMA TRANSITION
@@ -64,7 +64,7 @@
 				enter-cancelled / leave-cancelled
 			Obs.: CSS = false significa que o css não irá influenciar a transição realizada via JS 
 		-->
-		<!-- <hr>
+		<hr>
 		<button @click="exibir2 = !exibir2">Alternar</button>
 		<transition
 			:css="false"
@@ -78,16 +78,16 @@
 			@after-leave="afterLeave"
 			@leave-cancelled="leaveCancelled">
 				<div v-if="exibir2" class="box" :style="{width: `${larguraBase}px`}"></div>
-		</transition> -->
+		</transition>
 
-		<!-- <hr>
+		<hr>
 		<div class="mb-4">
 			<b-button variant="primary" class="mr-2" @click="componenteSelecionado = 'AlertaInfo'">Info</b-button>
 			<b-button variant="warning" @click="componenteSelecionado = 'AlertaAdvertencia'">Advertência</b-button>
 		</div>
 		<transition name="fade" mode="out-in">
 			<component :is="componenteSelecionado"></component>
-		</transition> -->
+		</transition>
 
 		<!-- COMENTARIO
 			Propriedade "tag" nos permite escolher qual será o elemento encapsulador de um transition group 
